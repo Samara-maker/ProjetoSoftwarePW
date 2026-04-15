@@ -1,0 +1,11 @@
+<h1>Clientes</h1>
+
+<a href="/clientes/novo">Novo Cliente</a>
+
+<ul>
+  <% clientes.forEach(cliente => { %>
+    <li>
+      <%= cliente.nome %> - <%= cliente.cpf %>
+    </li>
+  <% }) %>
+</ul>
