@@ -1,0 +1,18 @@
+<h2><%= titulo %></h2>
+
+<form action="/funcionarios/<%= funcionario ? funcionario.id + '/editar' : 'novo' %>" method="POST" class="formulario">
+  <div class="campo">
+    <label for="nome">Nome *</label>
+    <input type="text" id="nome" name="nome" value="<%= funcionario ? funcionario.nome : '' %>" required />
+  </div>
+
+  <div class="campo">
+    <label for="cargo">Cargo *</label>
+    <input type="text" id="cargo" name="cargo" value="<%= funcionario ? funcionario.cargo : '' %>" required />
+  </div>
+
+  <div class="acoes-formulario">
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="/funcionarios" class="btn btn-secondary">Cancelar</a>
+  </div>
+</form>

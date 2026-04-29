@@ -1,0 +1,13 @@
+<h2><%= titulo %></h2>
+
+<form action="/categorias/<%= categoria ? categoria.id + '/editar' : 'nova' %>" method="POST" class="formulario">
+  <div class="campo">
+    <label for="nome">Nome da Categoria *</label>
+    <input type="text" id="nome" name="nome" value="<%= categoria ? categoria.nome : '' %>" required />
+  </div>
+
+  <div class="acoes-formulario">
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="/categorias" class="btn btn-secondary">Cancelar</a>
+  </div>
+</form>

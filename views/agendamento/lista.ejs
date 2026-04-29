@@ -1,0 +1,39 @@
+<h2>Agendamentos</h2>
+<a href="/agendamentos/novo" class="btn btn-primary">+ Novo Agendamento</a>
+
+<table class="tabela">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Cliente</th>
+      <th>Data</th>
+      <th>Horário</th>
+      <th>Status</th>
+      <th>Funcionário</th>
+      <th>Equipe</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (agendamentos.length === 0) { %>
+      <tr><td colspan="8">Nenhum agendamento cadastrado.</td></tr>
+    <% } %>
+    <% agendamentos.forEach(a => { %>
+    <tr>
+      <td><%= a.id %></td>
+      <td><%= a.cliente ? a.cliente.nome : '-' %></td>
+      <td><%= a.data %></td>
+      <td><%= a.horarioInicio %> - <%= a.horarioFim %></td>
+      <td><span class="badge badge-<%= a.status %>"><%= a.status %></span></td>
+      <td><%= a.funcionario ? a.funcionario.nome : '-' %></td>
+      <td><%= a.equipe ? a.equipe.nome : '-' %></td>
+      <td>
+        <a href="/agendamentos/<%= a.id %>/editar" class="btn btn-sm btn-warning">Editar</a>
+        <form action="/agendamentos/<%= a.id %>/excluir" method="POST" style="display:inline">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Excluir?')">Excluir</button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

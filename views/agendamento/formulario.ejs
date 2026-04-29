@@ -1,0 +1,74 @@
+<h2><%= titulo %></h2>
+
+<form action="/agendamentos/<%= agendamento ? agendamento.id + '/editar' : 'novo' %>" method="POST" class="formulario">
+  <div class="campo">
+    <label for="cliente_id">Cliente *</label>
+    <select id="cliente_id" name="cliente_id" required>
+      <option value="">-- Selecione --</option>
+      <% clientes.forEach(c => { %>
+        <option value="<%= c.id %>" <%= agendamento && agendamento.cliente && agendamento.cliente.id == c.id ? 'selected' : '' %>>
+          <%= c.nome %>
+        </option>
+      <% }) %>
+    </select>
+  </div>
+
+  <div class="campo">
+    <label for="data">Data *</label>
+    <input type="date" id="data" name="data" value="<%= agendamento ? agendamento.data : '' %>" required />
+  </div>
+
+  <div class="campo">
+    <label for="horarioInicio">Horário Início *</label>
+    <input type="time" id="horarioInicio" name="horarioInicio" value="<%= agendamento ? agendamento.horarioInicio : '' %>" required />
+  </div>
+
+  <div class="campo">
+    <label for="horarioFim">Horário Fim *</label>
+    <input type="time" id="horarioFim" name="horarioFim" value="<%= agendamento ? agendamento.horarioFim : '' %>" required />
+  </div>
+
+  <div class="campo">
+    <label for="status">Status</label>
+    <select id="status" name="status">
+      <option value="pendente" <%= agendamento && agendamento.status === 'pendente' ? 'selected' : '' %>>Pendente</option>
+      <option value="confirmado" <%= agendamento && agendamento.status === 'confirmado' ? 'selected' : '' %>>Confirmado</option>
+      <option value="concluido" <%= agendamento && agendamento.status === 'concluido' ? 'selected' : '' %>>Concluído</option>
+      <option value="cancelado" <%= agendamento && agendamento.status === 'cancelado' ? 'selected' : '' %>>Cancelado</option>
+    </select>
+  </div>
+
+  <div class="campo">
+    <label for="funcionario_id">Funcionário</label>
+    <select id="funcionario_id" name="funcionario_id">
+      <option value="">-- Nenhum --</option>
+      <% funcionarios.forEach(f => { %>
+        <option value="<%= f.id %>" <%= agendamento && agendamento.funcionario && agendamento.funcionario.id == f.id ? 'selected' : '' %>>
+          <%= f.nome %>
+        </option>
+      <% }) %>
+    </select>
+  </div>
+
+  <div class="campo">
+    <label for="equipe_id">Equipe</label>
+    <select id="equipe_id" name="equipe_id">
+      <option value="">-- Nenhuma --</option>
+      <% equipes.forEach(e => { %>
+        <option value="<%= e.id %>" <%= agendamento && agendamento.equipe && agendamento.equipe.id == e.id ? 'selected' : '' %>>
+          <%= e.nome %>
+        </option>
+      <% }) %>
+    </select>
+  </div>
+
+  <div class="campo">
+    <label for="observacoes">Observações</label>
+    <textarea id="observacoes" name="observacoes" rows="3"><%= agendamento ? agendamento.observacoes : '' %></textarea>
+  </div>
+
+  <div class="acoes-formulario">
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="/agendamentos" class="btn btn-secondary">Cancelar</a>
+  </div>
+</form>

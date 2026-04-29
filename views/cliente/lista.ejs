@@ -1,0 +1,33 @@
+<h2>Clientes</h2>
+<a href="/clientes/novo" class="btn btn-primary">+ Novo Cliente</a>
+
+<table class="tabela">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Telefone</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (clientes.length === 0) { %>
+      <tr><td colspan="5">Nenhum cliente cadastrado.</td></tr>
+    <% } %>
+    <% clientes.forEach(cliente => { %>
+    <tr>
+      <td><%= cliente.id %></td>
+      <td><%= cliente.nome %></td>
+      <td><%= cliente.email %></td>
+      <td><%= cliente.telefone %></td>
+      <td>
+        <a href="/clientes/<%= cliente.id %>/editar" class="btn btn-sm btn-warning">Editar</a>
+        <form action="/clientes/<%= cliente.id %>/excluir" method="POST" style="display:inline">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Excluir?')">Excluir</button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

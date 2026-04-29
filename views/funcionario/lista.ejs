@@ -1,0 +1,31 @@
+<h2>Funcionários</h2>
+<a href="/funcionarios/novo" class="btn btn-primary">+ Novo Funcionário</a>
+
+<table class="tabela">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nome</th>
+      <th>Cargo</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (funcionarios.length === 0) { %>
+      <tr><td colspan="4">Nenhum funcionário cadastrado.</td></tr>
+    <% } %>
+    <% funcionarios.forEach(f => { %>
+    <tr>
+      <td><%= f.id %></td>
+      <td><%= f.nome %></td>
+      <td><%= f.cargo %></td>
+      <td>
+        <a href="/funcionarios/<%= f.id %>/editar" class="btn btn-sm btn-warning">Editar</a>
+        <form action="/funcionarios/<%= f.id %>/excluir" method="POST" style="display:inline">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Excluir?')">Excluir</button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

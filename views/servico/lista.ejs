@@ -1,0 +1,33 @@
+<h2>Serviços</h2>
+<a href="/servicos/novo" class="btn btn-primary">+ Novo Serviço</a>
+
+<table class="tabela">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Descrição</th>
+      <th>Categoria</th>
+      <th>Valor</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (servicos.length === 0) { %>
+      <tr><td colspan="5">Nenhum serviço cadastrado.</td></tr>
+    <% } %>
+    <% servicos.forEach(s => { %>
+    <tr>
+      <td><%= s.id %></td>
+      <td><%= s.descricao %></td>
+      <td><%= s.categoria ? s.categoria.nome : '-' %></td>
+      <td>R$ <%= parseFloat(s.valor).toFixed(2).replace('.', ',') %></td>
+      <td>
+        <a href="/servicos/<%= s.id %>/editar" class="btn btn-sm btn-warning">Editar</a>
+        <form action="/servicos/<%= s.id %>/excluir" method="POST" style="display:inline">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Excluir?')">Excluir</button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
