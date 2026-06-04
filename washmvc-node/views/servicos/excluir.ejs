@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+<div class="page-header"><div><h1>Excluir Serviço</h1></div>
+  <a href="/servicos" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Voltar</a>
+</div>
+<div class="card-danger" style="max-width:480px">
+  <div class="card-header-danger"><i class="bi bi-exclamation-triangle-fill"></i> Confirmar exclusão</div>
+  <div class="card-body p-4">
+    <p>Excluir o serviço <strong><%= servico.descricao %></strong>?</p>
+    <form action="/servicos/excluir/<%= servico.id %>" method="POST" class="d-flex gap-2">
+      <button type="submit" class="btn btn-danger">Sim, excluir</button>
+      <a href="/servicos" class="btn btn-outline-secondary">Cancelar</a>
+    </form>
+  </div>
+</div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,85 @@
+<%- include('../partials/header') %>
+<div class="page-header">
+  <div><h1>Editar Agendamento</h1><p>#<%= agendamento.id %></p></div>
+  <a href="/agendamentos" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Voltar</a>
+</div>
+<% if (errors.geral) { %>
+  <div class="alert alert-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i><%= errors.geral %></div>
+<% } %>
+<div class="card" style="max-width:680px"><div class="card-body">
+  <form action="/agendamentos/editar/<%= agendamento.id %>" method="POST">
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Cliente</label>
+        <select name="clienteId" class="form-select" required>
+          <option value="">Selecione o cliente</option>
+          <% clientes.forEach(function(c) { %>
+            <option value="<%= c.id %>" <%= agendamento.clienteId == c.id ? 'selected' : '' %>><%= c.nome %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Status</label>
+        <select name="status" class="form-select" required>
+          <% ['pendente','confirmado','concluido','cancelado'].forEach(function(s) { %>
+            <option value="<%= s %>" <%= agendamento.status == s ? 'selected' : '' %>><%= s.charAt(0).toUpperCase() + s.slice(1) %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Data</label>
+        <% var dataFormatada = agendamento.data ? new Date(agendamento.data).toISOString().split('T')[0] : '' %>
+        <input name="data" type="date" class="form-control" value="<%= dataFormatada %>" required />
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Início</label>
+        <input name="horarioInicio" type="time" class="form-control" value="<%= agendamento.horarioInicio || '' %>" required />
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Fim</label>
+        <input name="horarioFim" type="time" class="form-control" value="<%= agendamento.horarioFim || '' %>" required />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Funcionário <span class="text-muted fw-normal">(opcional)</span></label>
+        <select name="funcionarioId" class="form-select">
+          <option value="">Nenhum</option>
+          <% funcionarios.forEach(function(f) { %>
+            <option value="<%= f.id %>" <%= agendamento.funcionarioId == f.id ? 'selected' : '' %>><%= f.nome %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Equipe <span class="text-muted fw-normal">(opcional)</span></label>
+        <select name="equipeId" class="form-select">
+          <option value="">Nenhuma</option>
+          <% equipes.forEach(function(e) { %>
+            <option value="<%= e.id %>" <%= agendamento.equipeId == e.id ? 'selected' : '' %>><%= e.nome %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="col-12">
+        <label class="form-label">Observação <span class="text-muted fw-normal">(opcional)</span></label>
+        <textarea name="observacao" class="form-control" rows="2"><%= agendamento.observacao || '' %></textarea>
+      </div>
+    </div>
+    <div class="mb-4">
+      <label class="form-label">Serviços</label>
+      <div class="check-list">
+        <% servicos.forEach(function(s) { %>
+          <label class="check-item">
+            <input type="checkbox" name="servicosIds" value="<%= s.id %>" <%= servicosSelecionados.includes(String(s.id)) ? 'checked' : '' %> />
+            <div>
+              <div class="fw-semibold"><%= s.descricao %></div>
+              <div class="text-muted" style="font-size:.75rem"><%= s.categoria ? s.categoria.nome : '' %> · R$ <%= parseFloat(s.valor).toFixed(2).replace('.', ',') %></div>
+            </div>
+          </label>
+        <% }) %>
+      </div>
+    </div>
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary">Salvar</button>
+      <a href="/agendamentos" class="btn btn-outline-secondary">Cancelar</a>
+    </div>
+  </form>
+</div></div>
+<%- include('../partials/footer') %>
