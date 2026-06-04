@@ -21,9 +21,9 @@ router.get('/criar', async (req, res) => {
 router.post('/criar', async (req, res) => {
   const { descricao, valor, categoriaId } = req.body;
   const errors = {};
-  if (!descricao)    errors.descricao   = 'A descrição é obrigatória';
-  if (!valor)        errors.valor       = 'O valor é obrigatório';
-  if (!categoriaId)  errors.categoriaId = 'A categoria é obrigatória';
+  if (!descricao) errors.descricao = 'A descrição é obrigatória';
+  if (!valor) errors.valor = 'O valor é obrigatório';
+  if (!categoriaId) errors.categoriaId = 'A categoria é obrigatória';
   if (Object.keys(errors).length) {
     const categorias = await getCategorias();
     return res.render('servicos/criar', { title: 'Novo Serviço', categorias, errors, data: req.body, controller: 'Servicos' });
@@ -50,8 +50,8 @@ router.post('/editar/:id', async (req, res) => {
   const id = Number(req.params.id);
   const { descricao, valor, categoriaId } = req.body;
   const errors = {};
-  if (!descricao)   errors.descricao   = 'A descrição é obrigatória';
-  if (!valor)       errors.valor       = 'O valor é obrigatório';
+  if (!descricao) errors.descricao = 'A descrição é obrigatória';
+  if (!valor) errors.valor = 'O valor é obrigatório';
   if (!categoriaId) errors.categoriaId = 'A categoria é obrigatória';
   if (Object.keys(errors).length) {
     const categorias = await getCategorias();

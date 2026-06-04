@@ -5,7 +5,7 @@ module.exports = new EntitySchema({
   tableName: 'funcionario_equipe',
   columns: {
     funcionarioId: { primary: true, type: 'int', name: 'funcionario_id' },
-    equipeId:      { primary: true, type: 'int', name: 'equipe_id' },
+    equipeId: { primary: true, type: 'int', name: 'equipe_id' },
   },
   relations: {
     funcionario: {

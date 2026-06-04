@@ -1,31 +1,56 @@
 <%- include('../partials/header') %>
-<div class="page-header"><div><h1>Editar Serviço</h1><p>#<%= servico.id %></p></div>
-  <a href="/servicos" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Voltar</a>
-</div>
-<div class="card" style="max-width:560px"><div class="card-body">
-  <% if (errors.geral) { %><div class="alert alert-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i><%= errors.geral %></div><% } %>
-  <form action="/servicos/editar/<%= servico.id %>" method="POST">
-    <div class="mb-3"><label class="form-label">Descrição</label>
-      <input name="descricao" class="form-control" value="<%= servico.descricao || '' %>" />
-      <% if (errors.descricao) { %><div class="text-danger small"><%= errors.descricao %></div><% } %>
+  <div class="page-header">
+    <div>
+      <h1>Editar Serviço</h1>
+      <p>#<%= servico.id %>
+      </p>
     </div>
-    <div class="mb-3"><label class="form-label">Valor (R$)</label>
-      <input name="valor" type="number" step="0.01" min="0.01" class="form-control" value="<%= servico.valor || '' %>" />
-      <% if (errors.valor) { %><div class="text-danger small"><%= errors.valor %></div><% } %>
+    <a href="/servicos" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Voltar</a>
+  </div>
+  <div class="card" style="max-width:560px">
+    <div class="card-body">
+      <% if (errors.geral) { %>
+        <div class="alert alert-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <%= errors.geral %>
+        </div>
+        <% } %>
+          <form action="/servicos/editar/<%= servico.id %>" method="POST">
+            <div class="mb-3"><label class="form-label">Descrição</label>
+              <input name="descricao" class="form-control" value="<%= servico.descricao || '' %>" />
+              <% if (errors.descricao) { %>
+                <div class="text-danger small">
+                  <%= errors.descricao %>
+                </div>
+                <% } %>
+            </div>
+            <div class="mb-3"><label class="form-label">Valor (R$)</label>
+              <input name="valor" type="number" step="0.01" min="0.01" class="form-control"
+                value="<%= servico.valor || '' %>" />
+              <% if (errors.valor) { %>
+                <div class="text-danger small">
+                  <%= errors.valor %>
+                </div>
+                <% } %>
+            </div>
+            <div class="mb-4"><label class="form-label">Categoria</label>
+              <select name="categoriaId" class="form-select">
+                <option value="">Selecione uma categoria</option>
+                <% categorias.forEach(function(c) { %>
+                  <option value="<%= c.id %>" <%=servico.categoriaId==c.id ? 'selected' : '' %>><%= c.nome %>
+                  </option>
+                  <% }) %>
+              </select>
+              <% if (errors.categoriaId) { %>
+                <div class="text-danger small">
+                  <%= errors.categoriaId %>
+                </div>
+                <% } %>
+            </div>
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary">Salvar</button>
+              <a href="/servicos" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+          </form>
     </div>
-    <div class="mb-4"><label class="form-label">Categoria</label>
-      <select name="categoriaId" class="form-select">
-        <option value="">Selecione uma categoria</option>
-        <% categorias.forEach(function(c) { %>
-          <option value="<%= c.id %>" <%= servico.categoriaId == c.id ? 'selected' : '' %>><%= c.nome %></option>
-        <% }) %>
-      </select>
-      <% if (errors.categoriaId) { %><div class="text-danger small"><%= errors.categoriaId %></div><% } %>
-    </div>
-    <div class="d-flex gap-2">
-      <button type="submit" class="btn btn-primary">Salvar</button>
-      <a href="/servicos" class="btn btn-outline-secondary">Cancelar</a>
-    </div>
-  </form>
-</div></div>
-<%- include('../partials/footer') %>
+  </div>
+  <%- include('../partials/footer') %>

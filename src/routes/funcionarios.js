@@ -15,7 +15,7 @@ router.get('/criar', (req, res) => {
 router.post('/criar', async (req, res) => {
   const { nome, cargo } = req.body;
   const errors = {};
-  if (!nome)  errors.nome  = 'O nome é obrigatório';
+  if (!nome) errors.nome = 'O nome é obrigatório';
   if (!cargo) errors.cargo = 'O cargo é obrigatório';
   if (Object.keys(errors).length) {
     return res.render('funcionarios/criar', { title: 'Novo Funcionário', errors, data: req.body, controller: 'Funcionarios' });
@@ -40,7 +40,7 @@ router.post('/editar/:id', async (req, res) => {
   const id = Number(req.params.id);
   const { nome, cargo } = req.body;
   const errors = {};
-  if (!nome)  errors.nome  = 'O nome é obrigatório';
+  if (!nome) errors.nome = 'O nome é obrigatório';
   if (!cargo) errors.cargo = 'O cargo é obrigatório';
   if (Object.keys(errors).length) {
     const funcionario = { id, ...req.body };

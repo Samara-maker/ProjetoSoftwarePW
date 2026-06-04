@@ -1,81 +1,104 @@
 <%- include('../partials/header') %>
 
-<div class="page-header">
-  <div>
-    <h1>Dashboard</h1>
-    <p>Visão geral do sistema</p>
+  <div class="page-header">
+    <div>
+      <h1>Dashboard</h1>
+      <p>Visão geral do sistema</p>
+    </div>
   </div>
-</div>
 
-<div class="row g-3 mb-4">
-  <div class="col-6 col-md-3">
-    <div class="stat-card">
-      <div class="stat-icon blue"><i class="bi bi-people"></i></div>
-      <div>
-        <div class="stat-label">Clientes</div>
-        <div class="stat-value"><%= totalClientes %></div>
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+      <div class="stat-card">
+        <div class="stat-icon blue"><i class="bi bi-people"></i></div>
+        <div>
+          <div class="stat-label">Clientes</div>
+          <div class="stat-value">
+            <%= totalClientes %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card">
+        <div class="stat-icon green"><i class="bi bi-person-badge"></i></div>
+        <div>
+          <div class="stat-label">Funcionários</div>
+          <div class="stat-value">
+            <%= totalFuncionarios %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card">
+        <div class="stat-icon amber"><i class="bi bi-calendar-check"></i></div>
+        <div>
+          <div class="stat-label">Agendamentos</div>
+          <div class="stat-value">
+            <%= totalAgendamentos %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card">
+        <div class="stat-icon rose"><i class="bi bi-wrench-adjustable"></i></div>
+        <div>
+          <div class="stat-label">Serviços</div>
+          <div class="stat-value">
+            <%= totalServicos %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-6 col-md-3">
-    <div class="stat-card">
-      <div class="stat-icon green"><i class="bi bi-person-badge"></i></div>
-      <div>
-        <div class="stat-label">Funcionários</div>
-        <div class="stat-value"><%= totalFuncionarios %></div>
-      </div>
-    </div>
-  </div>
-  <div class="col-6 col-md-3">
-    <div class="stat-card">
-      <div class="stat-icon amber"><i class="bi bi-calendar-check"></i></div>
-      <div>
-        <div class="stat-label">Agendamentos</div>
-        <div class="stat-value"><%= totalAgendamentos %></div>
-      </div>
-    </div>
-  </div>
-  <div class="col-6 col-md-3">
-    <div class="stat-card">
-      <div class="stat-icon rose"><i class="bi bi-wrench-adjustable"></i></div>
-      <div>
-        <div class="stat-label">Serviços</div>
-        <div class="stat-value"><%= totalServicos %></div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="card">
-  <div class="card-header">
-    <span><i class="bi bi-clock-history me-2 text-muted"></i>Agendamentos Recentes</span>
-    <a href="/agendamentos" class="btn btn-sm btn-outline-secondary">Ver todos</a>
+  <div class="card">
+    <div class="card-header">
+      <span><i class="bi bi-clock-history me-2 text-muted"></i>Agendamentos Recentes</span>
+      <a href="/agendamentos" class="btn btn-sm btn-outline-secondary">Ver todos</a>
+    </div>
+    <div class="card-body p-0">
+      <% if (!agendamentosRecentes.length) { %>
+        <div class="empty-state">
+          <i class="bi bi-calendar-x"></i>
+          <p>Nenhum agendamento cadastrado ainda.</p>
+        </div>
+        <% } else { %>
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Cliente</th>
+                <th>Data</th>
+                <th>Horário</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% agendamentosRecentes.forEach(a=> { %>
+                <tr>
+                  <td class="text-muted">#<%= a.id %>
+                  </td>
+                  <td>
+                    <%= a.cliente.nome %>
+                  </td>
+                  <td>
+                    <%= new Date(a.data).toLocaleDateString('pt-BR', {timeZone:'UTC'}) %>
+                  </td>
+                  <td>
+                    <%= a.horarioInicio %> – <%= a.horarioFim %>
+                  </td>
+                  <td><span class="badge-status <%= a.status.toLowerCase() %>">
+                      <%= a.status %>
+                    </span></td>
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+          <% } %>
+    </div>
   </div>
-  <div class="card-body p-0">
-    <% if (!agendamentosRecentes.length) { %>
-      <div class="empty-state">
-        <i class="bi bi-calendar-x"></i>
-        <p>Nenhum agendamento cadastrado ainda.</p>
-      </div>
-    <% } else { %>
-      <table class="table mb-0">
-        <thead>
-          <tr><th>#</th><th>Cliente</th><th>Data</th><th>Horário</th><th>Status</th></tr>
-        </thead>
-        <tbody>
-          <% agendamentosRecentes.forEach(a => { %>
-            <tr>
-              <td class="text-muted">#<%= a.id %></td>
-              <td><%= a.cliente.nome %></td>
-              <td><%= new Date(a.data).toLocaleDateString('pt-BR', {timeZone:'UTC'}) %></td>
-              <td><%= a.horarioInicio %> – <%= a.horarioFim %></td>
-              <td><span class="badge-status <%= a.status.toLowerCase() %>"><%= a.status %></span></td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    <% } %>
-  </div>
-</div>
 
-<%- include('../partials/footer') %>
+  <%- include('../partials/footer') %>

@@ -1,9 +1,6 @@
 CREATE DATABASE wash_bd;
 USE wash_bd;
 
--- =========================
--- TABELA CLIENTE
--- =========================
 CREATE TABLE cliente (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -11,26 +8,17 @@ CREATE TABLE cliente (
     telefone VARCHAR(20)
 );
 
--- =========================
--- TABELA FUNCIONARIO
--- =========================
 CREATE TABLE funcionario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     cargo VARCHAR(50)
 );
 
--- =========================
--- TABELA EQUIPE
--- =========================
 CREATE TABLE equipe (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100)
 );
 
--- =========================
--- N:N FUNCIONARIO ↔️ EQUIPE
--- =========================
 CREATE TABLE funcionario_equipe (
     funcionario_id INT,
     equipe_id INT,
@@ -39,17 +27,11 @@ CREATE TABLE funcionario_equipe (
     FOREIGN KEY (equipe_id) REFERENCES equipe(id)
 );
 
--- =========================
--- TABELA CATEGORIA SERVIÇO
--- =========================
 CREATE TABLE categoria_servico (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100)
 );
 
--- =========================
--- TABELA SERVIÇO
--- =========================
 CREATE TABLE servico (
     id INT AUTO_INCREMENT PRIMARY KEY,
     descricao VARCHAR(255),
@@ -58,9 +40,6 @@ CREATE TABLE servico (
     FOREIGN KEY (categoria_id) REFERENCES categoria_servico(id)
 );
 
--- =========================
--- TABELA AGENDAMENTO
--- =========================
 CREATE TABLE agendamento (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cliente_id INT,
@@ -72,9 +51,6 @@ CREATE TABLE agendamento (
     FOREIGN KEY (cliente_id) REFERENCES cliente(id)
 );
 
--- =========================
--- N:N AGENDAMENTO ↔️ SERVIÇO
--- =========================
 CREATE TABLE agendamento_servico (
     agendamento_id INT,
     servico_id INT,
@@ -83,17 +59,10 @@ CREATE TABLE agendamento_servico (
     FOREIGN KEY (servico_id) REFERENCES servico(id)
 );
 
--- =========================
--- RELAÇÃO 1:N FUNCIONARIO → AGENDAMENTO
--- (quem executa o serviço)
--- =========================
 ALTER TABLE agendamento
 ADD funcionario_id INT,
 ADD FOREIGN KEY (funcionario_id) REFERENCES funcionario(id);
 
--- =========================
--- RELAÇÃO 1:N EQUIPE → AGENDAMENTO
--- =========================
 ALTER TABLE agendamento
 ADD equipe_id INT,
 ADD FOREIGN KEY (equipe_id) REFERENCES equipe(id);

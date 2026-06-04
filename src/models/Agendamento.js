@@ -4,15 +4,15 @@ module.exports = new EntitySchema({
   name: 'Agendamento',
   tableName: 'agendamento',
   columns: {
-    id:            { primary: true, type: 'int', generated: true, name: 'id' },
-    clienteId:     { type: 'int', name: 'cliente_id' },
-    data:          { type: 'date', name: 'data' },
+    id: { primary: true, type: 'int', generated: true, name: 'id' },
+    clienteId: { type: 'int', name: 'cliente_id' },
+    data: { type: 'date', name: 'data' },
     horarioInicio: { type: 'time', name: 'horario_inicio' },
-    horarioFim:    { type: 'time', name: 'horario_fim' },
-    observacao:    { type: 'varchar', nullable: true, name: 'observacao' },
-    status:        { type: 'varchar', name: 'status' },
+    horarioFim: { type: 'time', name: 'horario_fim' },
+    observacao: { type: 'varchar', nullable: true, name: 'observacao' },
+    status: { type: 'varchar', name: 'status' },
     funcionarioId: { type: 'int', nullable: true, name: 'funcionario_id' },
-    equipeId:      { type: 'int', nullable: true, name: 'equipe_id' },
+    equipeId: { type: 'int', nullable: true, name: 'equipe_id' },
   },
   relations: {
     cliente: {

@@ -34,14 +34,14 @@ class AgendamentoService {
     }
 
     const agendamento = this.repo.create({
-      clienteId:     Number(data.clienteId),
-      data:          data.data,
+      clienteId: Number(data.clienteId),
+      data: data.data,
       horarioInicio: data.horarioInicio,
-      horarioFim:    data.horarioFim,
-      observacao:    data.observacao || null,
-      status:        data.status,
+      horarioFim: data.horarioFim,
+      observacao: data.observacao || null,
+      status: data.status,
       funcionarioId: data.funcionarioId ? Number(data.funcionarioId) : null,
-      equipeId:      data.equipeId ? Number(data.equipeId) : null,
+      equipeId: data.equipeId ? Number(data.equipeId) : null,
     });
     await this.repo.save(agendamento);
 
@@ -63,14 +63,14 @@ class AgendamentoService {
     if (!clienteExiste) throw new Error(`Cliente #${data.clienteId} não encontrado`);
 
     Object.assign(a, {
-      clienteId:     Number(data.clienteId),
-      data:          data.data,
+      clienteId: Number(data.clienteId),
+      data: data.data,
       horarioInicio: data.horarioInicio,
-      horarioFim:    data.horarioFim,
-      observacao:    data.observacao || null,
-      status:        data.status,
+      horarioFim: data.horarioFim,
+      observacao: data.observacao || null,
+      status: data.status,
       funcionarioId: data.funcionarioId ? Number(data.funcionarioId) : null,
-      equipeId:      data.equipeId ? Number(data.equipeId) : null,
+      equipeId: data.equipeId ? Number(data.equipeId) : null,
     });
 
     const asRepo = db.getRepository('AgendamentoServico');

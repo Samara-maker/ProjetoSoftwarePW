@@ -6,10 +6,10 @@ const router = Router();
 router.get('/', async (req, res) => {
   try {
     const db = AppDataSource;
-    const totalClientes     = await db.getRepository('Cliente').count();
+    const totalClientes = await db.getRepository('Cliente').count();
     const totalFuncionarios = await db.getRepository('Funcionario').count();
     const totalAgendamentos = await db.getRepository('Agendamento').count();
-    const totalServicos     = await db.getRepository('Servico').count();
+    const totalServicos = await db.getRepository('Servico').count();
     const agendamentosRecentes = await db.getRepository('Agendamento').find({
       relations: ['cliente'],
       order: { data: 'DESC' },

@@ -15,8 +15,8 @@ router.get('/criar', (req, res) => {
 router.post('/criar', async (req, res) => {
   const { nome, email, telefone } = req.body;
   const errors = {};
-  if (!nome)     errors.nome     = 'O nome é obrigatório';
-  if (!email)    errors.email    = 'O e-mail é obrigatório';
+  if (!nome) errors.nome = 'O nome é obrigatório';
+  if (!email) errors.email = 'O e-mail é obrigatório';
   if (!telefone) errors.telefone = 'O telefone é obrigatório';
   if (Object.keys(errors).length) {
     return res.render('clientes/criar', { title: 'Novo Cliente', errors, data: req.body, controller: 'Clientes' });
@@ -41,8 +41,8 @@ router.post('/editar/:id', async (req, res) => {
   const id = Number(req.params.id);
   const { nome, email, telefone } = req.body;
   const errors = {};
-  if (!nome)     errors.nome     = 'O nome é obrigatório';
-  if (!email)    errors.email    = 'O e-mail é obrigatório';
+  if (!nome) errors.nome = 'O nome é obrigatório';
+  if (!email) errors.email = 'O e-mail é obrigatório';
   if (!telefone) errors.telefone = 'O telefone é obrigatório';
   if (Object.keys(errors).length) {
     const cliente = { id, ...req.body };

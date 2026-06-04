@@ -7,10 +7,10 @@ const router = Router();
 async function getFormData() {
   const db = AppDataSource;
   return {
-    clientes:     await db.getRepository('Cliente').find(),
+    clientes: await db.getRepository('Cliente').find(),
     funcionarios: await db.getRepository('Funcionario').find(),
-    equipes:      await db.getRepository('Equipe').find(),
-    servicos:     await db.getRepository('Servico').find({ relations: ['categoria'] }),
+    equipes: await db.getRepository('Equipe').find(),
+    servicos: await db.getRepository('Servico').find({ relations: ['categoria'] }),
   };
 }
 
@@ -30,11 +30,11 @@ router.post('/criar', async (req, res) => {
   if (!Array.isArray(servicosIds)) servicosIds = [servicosIds];
 
   const errors = {};
-  if (!clienteId)     errors.clienteId     = 'O cliente é obrigatório';
-  if (!data)          errors.data          = 'A data é obrigatória';
+  if (!clienteId) errors.clienteId = 'O cliente é obrigatório';
+  if (!data) errors.data = 'A data é obrigatória';
   if (!horarioInicio) errors.horarioInicio = 'O horário de início é obrigatório';
-  if (!horarioFim)    errors.horarioFim    = 'O horário de fim é obrigatório';
-  if (!status)        errors.status        = 'O status é obrigatório';
+  if (!horarioFim) errors.horarioFim = 'O horário de fim é obrigatório';
+  if (!status) errors.status = 'O status é obrigatório';
   if (!servicosIds.length) errors.servicos = 'Informe ao menos um serviço';
 
   if (Object.keys(errors).length) {
@@ -67,11 +67,11 @@ router.post('/editar/:id', async (req, res) => {
   if (!Array.isArray(servicosIds)) servicosIds = [servicosIds];
 
   const errors = {};
-  if (!clienteId)     errors.clienteId     = 'O cliente é obrigatório';
-  if (!data)          errors.data          = 'A data é obrigatória';
+  if (!clienteId) errors.clienteId = 'O cliente é obrigatório';
+  if (!data) errors.data = 'A data é obrigatória';
   if (!horarioInicio) errors.horarioInicio = 'Informe o horário de início';
-  if (!horarioFim)    errors.horarioFim    = 'Informe o horário de fim';
-  if (!status)        errors.status        = 'O status é obrigatório';
+  if (!horarioFim) errors.horarioFim = 'Informe o horário de fim';
+  if (!status) errors.status = 'O status é obrigatório';
 
   if (Object.keys(errors).length) {
     const form = await getFormData();
