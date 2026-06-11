@@ -22,7 +22,6 @@ body {
     min-height: 100vh;
 }
 
-/* ── Sidebar ── */
 .sidebar {
     width: var(--sidebar-width);
     background: var(--sidebar-bg);
@@ -179,10 +178,10 @@ body {
     flex-shrink: 0;
 }
 
-.stat-icon.blue  { background: #eff6ff; color: #2563eb; }
-.stat-icon.green { background: #f0fdf4; color: #16a34a; }
-.stat-icon.amber { background: #fffbeb; color: #d97706; }
-.stat-icon.rose  { background: #fff1f2; color: #e11d48; }
+.stat-icon.blue  { background: #d5dae1; color: #2563eb; }
+.stat-icon.green { background: #d9cdce; color: #16a34a; }
+.stat-icon.amber { background: #d9cdce; color: #d97706; }
+.stat-icon.rose  { background: #d9cdce; color: #e11d48; }
 
 .stat-label { font-size: .78rem; color: var(--text-muted); font-weight: 500; }
 .stat-value { font-size: 1.6rem; font-weight: 700; line-height: 1.1; }
@@ -212,10 +211,10 @@ body {
     font-size: .72rem;
     font-weight: 600;
 }
-.badge-status.pendente  { background: #fffbeb; color: #b45309; }
-.badge-status.confirmado { background: #f0fdf4; color: #15803d; }
-.badge-status.concluido { background: #eff6ff; color: #1d4ed8; }
-.badge-status.cancelado { background: #fff1f2; color: #be123c; }
+.badge-status.pendente  { background: #d5dae1; color: #b45309; }
+.badge-status.confirmado { background: #d5dae1; color: #15803d; }
+.badge-status.concluido { background: #d5dae1; color: #1d4ed8; }
+.badge-status.cancelado { background: #d5dae1; color: #be123c; }
 
 /* ── Buttons ── */
 .btn-primary {
@@ -270,7 +269,7 @@ body {
     overflow: hidden;
 }
 .card-danger .card-header-danger {
-    background: #fff1f2;
+    background: #d5dae1;
     border-bottom: 1px solid #fecdd3;
     padding: 16px 20px;
     color: #be123c;
