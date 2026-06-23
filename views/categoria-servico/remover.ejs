@@ -1,0 +1,22 @@
+<%- include('../layouts/partials/header') %>
+<% const categoria = locals.categoria || {} %>
+
+  <div class="page-header">
+    <div><h1>Excluir Categoria</h1></div>
+    <a href="/categorias" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Voltar</a>
+  </div>
+
+  <div class="card-danger" style="max-width:480px">
+    <div class="card-header-danger"><i class="bi bi-exclamation-triangle-fill"></i> Confirmar exclusão</div>
+    <div class="card-body p-4">
+      <% if (locals.erro) { %><div class="alert alert-danger"><%= erro %></div><% } %>
+      <p>Tem certeza que deseja excluir a categoria <strong><%= categoria.nome %></strong>?</p>
+      <p class="text-muted small">Esta ação não poderá ser desfeita.</p>
+      <form action="/categorias/<%= categoria.id %>/excluir" method="POST" class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">Sim, excluir</button>
+        <a href="/categorias" class="btn btn-outline-secondary">Cancelar</a>
+      </form>
+    </div>
+  </div>
+
+<%- include('../layouts/partials/footer') %>
