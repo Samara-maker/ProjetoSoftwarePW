@@ -1,0 +1,59 @@
+<%- include('../layouts/partials/header') %>
+<% const erros = validationErrors(locals.errors); %>
+<% const servico = locals.servico || {} %>
+<% const categorias = locals.categorias || [] %>
+<% const catId = servico.categoria && typeof servico.categoria === 'object' ? servico.categoria.id : servico.categoria %>
+
+  <div class="page-header">
+    <div>
+      <h1><%= locals.titulo %></h1>
+      <% if (servico.id) { %><p>#<%= servico.id %></p><% } %>
+    </div>
+    <a href="/servicos" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Voltar</a>
+  </div>
+
+  <div class="card" style="max-width:560px">
+    <div class="card-body">
+      <% if (erros.all.length) { %>
+        <div class="alert alert-danger">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <ul class="mb-0 mt-1">
+            <% erros.all.forEach(m => { %><li><%= m %></li><% }) %>
+          </ul>
+        </div>
+      <% } %>
+      <form action="/servicos/<%= servico.id ? servico.id + '/editar' : 'criar' %>" method="POST">
+        <div class="mb-3">
+          <label class="form-label">Descrição</label>
+          <input name="descricao" class="form-control <%= erros.has('descricao') ? 'is-invalid' : '' %>"
+            value="<%= servico.descricao || '' %>" placeholder="Ex: Limpeza de sofá" />
+          <% if (erros.has('descricao')) { %>
+            <div class="text-danger small"><%= erros.get('descricao')[0] %></div>
+          <% } %>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Valor (R$)</label>
+          <input name="valor" type="number" step="0.01" min="0" class="form-control <%= erros.has('valor') ? 'is-invalid' : '' %>"
+            value="<%= servico.valor || '' %>" placeholder="0,00" />
+          <% if (erros.has('valor')) { %>
+            <div class="text-danger small"><%= erros.get('valor')[0] %></div>
+          <% } %>
+        </div>
+        <div class="mb-4">
+          <label class="form-label">Categoria</label>
+          <select name="categoria" class="form-select">
+            <option value="">-- Selecione --</option>
+            <% categorias.forEach(c => { %>
+              <option value="<%= c.id %>" <%= String(catId) === String(c.id) ? 'selected' : '' %>><%= c.nome %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+          <a href="/servicos" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<%- include('../layouts/partials/footer') %>

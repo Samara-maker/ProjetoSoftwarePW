@@ -1,0 +1,22 @@
+<%- include('../layouts/partials/header') %>
+<% const servico = locals.servico || {} %>
+
+  <div class="page-header">
+    <div><h1>Excluir Serviço</h1></div>
+    <a href="/servicos" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Voltar</a>
+  </div>
+
+  <div class="card-danger" style="max-width:480px">
+    <div class="card-header-danger"><i class="bi bi-exclamation-triangle-fill"></i> Confirmar exclusão</div>
+    <div class="card-body p-4">
+      <% if (locals.erro) { %><div class="alert alert-danger"><%= erro %></div><% } %>
+      <p>Tem certeza que deseja excluir o serviço <strong><%= servico.descricao %></strong>?</p>
+      <p class="text-muted small">Esta ação não poderá ser desfeita.</p>
+      <form action="/servicos/<%= servico.id %>/excluir" method="POST" class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">Sim, excluir</button>
+        <a href="/servicos" class="btn btn-outline-secondary">Cancelar</a>
+      </form>
+    </div>
+  </div>
+
+<%- include('../layouts/partials/footer') %>
