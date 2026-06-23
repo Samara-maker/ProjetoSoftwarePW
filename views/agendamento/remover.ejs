@@ -1,21 +1,23 @@
-<%- include('../partials/header') %>
+<%- include('../layouts/partials/header') %>
+<% const ag = locals.agendamento || {} %>
+
   <div class="page-header">
-    <div>
-      <h1>Excluir Agendamento</h1>
-    </div>
+    <div><h1>Excluir Agendamento</h1></div>
     <a href="/agendamentos" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Voltar</a>
   </div>
+
   <div class="card-danger" style="max-width:480px">
     <div class="card-header-danger"><i class="bi bi-exclamation-triangle-fill"></i> Confirmar exclusão</div>
     <div class="card-body p-4">
-      <p>Excluir o agendamento <strong>#<%= agendamento.id %></strong> de <strong>
-          <%= agendamento.cliente ? agendamento.cliente.nome : '' %>
-        </strong>?</p>
+      <% if (locals.erro) { %><div class="alert alert-danger"><%= erro %></div><% } %>
+      <p>Tem certeza que deseja excluir o agendamento <strong>#<%= ag.id %></strong>
+        de <strong><%= ag.cliente ? ag.cliente.nome : '-' %></strong>?</p>
       <p class="text-muted small">Esta ação não poderá ser desfeita.</p>
-      <form action="/agendamentos/excluir/<%= agendamento.id %>" method="POST" class="d-flex gap-2">
+      <form action="/agendamentos/<%= ag.id %>/excluir" method="POST" class="d-flex gap-2">
         <button type="submit" class="btn btn-danger">Sim, excluir</button>
         <a href="/agendamentos" class="btn btn-outline-secondary">Cancelar</a>
       </form>
     </div>
   </div>
-  <%- include('../partials/footer') %>
+
+<%- include('../layouts/partials/footer') %>

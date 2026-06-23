@@ -1,0 +1,139 @@
+<%- include('../layouts/partials/header') %>
+<% const erros = validationErrors(locals.errors); %>
+<% const ag = locals.agendamento || {} %>
+<% const clientes = locals.clientes || [] %>
+<% const funcionarios = locals.funcionarios || [] %>
+<% const equipes = locals.equipes || [] %>
+<% const servicos = locals.servicos || [] %>
+<% const servicosSelecionados = (locals.servicosSelecionados || []).map(String) %>
+<% const idDe = (obj) => obj && typeof obj === 'object' ? obj.id : obj %>
+
+  <div class="page-header">
+    <div>
+      <h1><%= locals.titulo %></h1>
+      <% if (ag.id) { %><p>#<%= ag.id %></p><% } %>
+    </div>
+    <a href="/agendamentos" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Voltar</a>
+  </div>
+
+  <div class="card" style="max-width:720px">
+    <div class="card-body">
+      <% if (erros.all.length) { %>
+        <div class="alert alert-danger">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <ul class="mb-0 mt-1">
+            <% erros.all.forEach(m => { %><li><%= m %></li><% }) %>
+          </ul>
+        </div>
+      <% } %>
+
+      <form action="/agendamentos/<%= ag.id ? ag.id + '/editar' : 'criar' %>" method="POST">
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Cliente</label>
+            <select name="clienteId" class="form-select">
+              <option value="">-- Selecione --</option>
+              <% clientes.forEach(c => { %>
+                <option value="<%= c.id %>" <%= String(idDe(ag.cliente)) === String(c.id) ? 'selected' : '' %>><%= c.nome %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-select">
+              <% ['pendente','confirmado','concluido','cancelado'].forEach(s => { %>
+                <option value="<%= s %>" <%= (ag.status || 'pendente') === s ? 'selected' : '' %>><%= s.charAt(0).toUpperCase() + s.slice(1) %></option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <label class="form-label">Data</label>
+            <input type="date" name="data" class="form-control" value="<%= ag.data || '' %>" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Horário início</label>
+            <input type="time" name="horarioInicio" class="form-control" value="<%= ag.horarioInicio || '' %>" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Horário fim</label>
+            <input type="time" name="horarioFim" class="form-control" value="<%= ag.horarioFim || '' %>" />
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Funcionário <span class="text-muted fw-normal">(opcional)</span></label>
+            <select name="funcionarioId" class="form-select">
+              <option value="">-- Nenhum --</option>
+              <% funcionarios.forEach(f => { %>
+                <option value="<%= f.id %>" <%= String(idDe(ag.funcionario)) === String(f.id) ? 'selected' : '' %>><%= f.nome %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Equipe <span class="text-muted fw-normal">(opcional)</span></label>
+            <select name="equipeId" class="form-select">
+              <option value="">-- Nenhuma --</option>
+              <% equipes.forEach(e => { %>
+                <option value="<%= e.id %>" <%= String(idDe(ag.equipe)) === String(e.id) ? 'selected' : '' %>><%= e.nome %></option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Serviços</label>
+          <div class="check-list">
+            <% if (!servicos.length) { %>
+              <p class="text-muted small mb-0">Nenhum serviço cadastrado.</p>
+            <% } %>
+            <% servicos.forEach(s => { %>
+              <label class="check-item">
+                <input type="checkbox" name="servicosIds" value="<%= s.id %>"
+                  data-valor="<%= s.valor || 0 %>" class="srv-cb"
+                  <%= servicosSelecionados.includes(String(s.id)) ? 'checked' : '' %>>
+                <div class="d-flex justify-content-between w-100">
+                  <span><%= s.descricao %></span>
+                  <span class="text-muted"><%= moneyFormat(s.valor) %></span>
+                </div>
+              </label>
+            <% }) %>
+          </div>
+          <% if (erros.has('servicosIds')) { %>
+            <div class="text-danger small mt-1"><%= erros.get('servicosIds')[0] %></div>
+          <% } %>
+          <div class="text-end mt-2 fw-semibold">Total: <span id="total">R$ 0,00</span></div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label">Observações <span class="text-muted fw-normal">(opcional)</span></label>
+          <textarea name="observacao" class="form-control" rows="3"><%= ag.observacao || '' %></textarea>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+          <a href="/agendamentos" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<script>
+  (function(){
+    var cbs = document.querySelectorAll('.srv-cb');
+    var el = document.getElementById('total');
+    function calc(){
+      var t = 0;
+      cbs.forEach(function(c){ if(c.checked) t += parseFloat(c.dataset.valor||0); });
+      el.textContent = t.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+    }
+    cbs.forEach(function(c){ c.addEventListener('change', calc); });
+    calc();
+  })();
+</script>
+
+<%- include('../layouts/partials/footer') %>

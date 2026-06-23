@@ -1,0 +1,44 @@
+<%- include('../layouts/partials/header') %>
+
+  <div class="page-header">
+    <div>
+      <h1>Agendamentos</h1>
+      <p><%= agendamentos.length %> agendamento(s) cadastrado(s)</p>
+    </div>
+    <a href="/agendamentos/criar" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Novo Agendamento</a>
+  </div>
+
+  <div class="card">
+    <div class="card-body p-0">
+      <% if (!agendamentos.length) { %>
+        <div class="empty-state"><i class="bi bi-calendar-x"></i>
+          <p>Nenhum agendamento cadastrado ainda.</p>
+        </div>
+      <% } else { %>
+        <table class="table mb-0">
+          <thead>
+            <tr><th>#</th><th>Cliente</th><th>Data</th><th>Horário</th><th>Status</th><th>Funcionário</th><th>Equipe</th><th></th></tr>
+          </thead>
+          <tbody>
+            <% agendamentos.forEach(a => { %>
+              <tr>
+                <td class="text-muted">#<%= a.id %></td>
+                <td class="fw-500"><%= a.cliente ? a.cliente.nome : '-' %></td>
+                <td><%= a.data ? new Date(a.data).toLocaleDateString('pt-BR', {timeZone:'UTC'}) : '-' %></td>
+                <td><%= a.horarioInicio %> – <%= a.horarioFim %></td>
+                <td><span class="badge-status <%= a.status ? a.status.toLowerCase() : '' %>"><%= a.status || '-' %></span></td>
+                <td><%= a.funcionario ? a.funcionario.nome : '-' %></td>
+                <td><%= a.equipe ? a.equipe.nome : '-' %></td>
+                <td class="text-end">
+                  <a href="/agendamentos/<%= a.id %>/editar" class="btn-icon edit me-1"><i class="bi bi-pencil"></i></a>
+                  <a href="/agendamentos/<%= a.id %>/excluir" class="btn-icon trash"><i class="bi bi-trash"></i></a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
+
+<%- include('../layouts/partials/footer') %>
