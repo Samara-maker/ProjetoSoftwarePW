@@ -1,0 +1,40 @@
+<%- include('../layouts/partials/header') %>
+
+  <div class="page-header">
+    <div>
+      <h1>Funcionários</h1>
+      <p><%= funcionarios.length %> funcionário(s) cadastrado(s)</p>
+    </div>
+    <a href="/funcionarios/criar" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Novo Funcionário</a>
+  </div>
+
+  <div class="card">
+    <div class="card-body p-0">
+      <% if (!funcionarios.length) { %>
+        <div class="empty-state"><i class="bi bi-person-badge"></i>
+          <p>Nenhum funcionário cadastrado ainda.</p>
+        </div>
+      <% } else { %>
+        <table class="table mb-0">
+          <thead>
+            <tr><th>#</th><th>Nome</th><th>Cargo</th><th></th></tr>
+          </thead>
+          <tbody>
+            <% funcionarios.forEach(f => { %>
+              <tr>
+                <td class="text-muted">#<%= f.id %></td>
+                <td class="fw-500"><%= f.nome %></td>
+                <td><%= f.cargo || '-' %></td>
+                <td class="text-end">
+                  <a href="/funcionarios/<%= f.id %>/editar" class="btn-icon edit me-1"><i class="bi bi-pencil"></i></a>
+                  <a href="/funcionarios/<%= f.id %>/excluir" class="btn-icon trash"><i class="bi bi-trash"></i></a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
+
+<%- include('../layouts/partials/footer') %>
