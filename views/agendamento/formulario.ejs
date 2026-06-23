@@ -53,9 +53,16 @@
         <div class="row g-3 mb-3">
           <div class="col-md-4">
             <label class="form-label">Data</label>
-            <input type="date" name="data" class="form-control" value="<%= ag.data || '' %>" />
+            <%
+              let dataValor = '';
+              if (ag.data) {
+                const d = new Date(ag.data);
+                dataValor = d.toISOString().split('T')[0];
+              }
+            %>
+            <input type="date" lang="pt-BR" name="data" class="form-control" value="<%= dataValor %>" />
           </div>
-          
+
           <div class="col-md-4">
             <label class="form-label">Horário início</label>
             <input type="time" name="horarioInicio" class="form-control" value="<%= ag.horarioInicio || '' %>" />
