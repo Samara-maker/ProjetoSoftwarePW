@@ -1,0 +1,60 @@
+<%- include('../layouts/partials/header') %>
+<% const erros = validationErrors(locals.errors); %>
+<% const equipe = locals.equipe || {} %>
+<% const funcionarios = locals.funcionarios || [] %>
+<% const funcionariosSelecionados = (locals.funcionariosSelecionados || []).map(String) %>
+
+  <div class="page-header">
+    <div>
+      <h1><%= locals.titulo %></h1>
+      <% if (equipe.id) { %><p>#<%= equipe.id %></p><% } %>
+    </div>
+    <a href="/equipes" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Voltar</a>
+  </div>
+
+  <div class="card" style="max-width:620px">
+    <div class="card-body">
+      <% if (erros.all.length) { %>
+        <div class="alert alert-danger">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <ul class="mb-0 mt-1">
+            <% erros.all.forEach(m => { %><li><%= m %></li><% }) %>
+          </ul>
+        </div>
+      <% } %>
+      <form action="/equipes/<%= equipe.id ? equipe.id + '/editar' : 'criar' %>" method="POST">
+        <div class="mb-3">
+          <label class="form-label">Nome da Equipe</label>
+          <input name="nome" class="form-control <%= erros.has('nome') ? 'is-invalid' : '' %>"
+            value="<%= equipe.nome || '' %>" placeholder="Ex: Equipe Alpha" />
+          <% if (erros.has('nome')) { %>
+            <div class="text-danger small"><%= erros.get('nome')[0] %></div>
+          <% } %>
+        </div>
+        <div class="mb-4">
+          <label class="form-label">Funcionários <span class="text-muted fw-normal">(opcional)</span></label>
+          <div class="check-list">
+            <% if (!funcionarios.length) { %>
+              <p class="text-muted small mb-0">Nenhum funcionário cadastrado.</p>
+            <% } %>
+            <% funcionarios.forEach(f => { %>
+              <label class="check-item">
+                <input type="checkbox" name="funcionariosIds" value="<%= f.id %>"
+                  <%= funcionariosSelecionados.includes(String(f.id)) ? 'checked' : '' %>>
+                <div>
+                  <div class="fw-500"><%= f.nome %></div>
+                  <div class="text-muted" style="font-size:.8rem"><%= f.cargo || '' %></div>
+                </div>
+              </label>
+            <% }) %>
+          </div>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+          <a href="/equipes" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<%- include('../layouts/partials/footer') %>
